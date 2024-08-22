@@ -5,6 +5,6 @@ public class RestApiRoutes {
 
     public static final String SEARCH_BASE = API + "/search";
 
-    public static final String SEARCH_ADD_SEARCH_WORDS = API + "/words";
-    public static final String SEARCH_FIND_COMMENTS_WORDS = API + "/comments/{word}";
+    public static final String SEARCH_ADD_SEARCH_WORDS = SEARCH_BASE + "/words";
+    public static final String SEARCH_FIND_COMMENTS_WORDS = SEARCH_BASE + "/comments/{word}";
 }

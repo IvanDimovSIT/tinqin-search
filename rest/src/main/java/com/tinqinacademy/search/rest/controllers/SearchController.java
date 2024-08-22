@@ -43,7 +43,7 @@ public class SearchController extends BaseController{
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "403", description = "Forbidden"),
     })
-    @PostMapping(RestApiRoutes.SEARCH_FIND_COMMENTS_WORDS)
+    @GetMapping(RestApiRoutes.SEARCH_FIND_COMMENTS_WORDS)
     public ResponseEntity<?> findComments(@PathVariable String word) {
         FindCommentsInput input = FindCommentsInput.builder()
                 .word(word)
