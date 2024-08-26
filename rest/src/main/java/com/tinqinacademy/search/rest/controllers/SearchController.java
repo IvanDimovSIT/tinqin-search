@@ -2,9 +2,9 @@ package com.tinqinacademy.search.rest.controllers;
 
 import com.tinqinacademy.search.api.RestApiRoutes;
 import com.tinqinacademy.search.api.errors.Errors;
-import com.tinqinacademy.search.api.operations.addsearchwords.AddSearchWordInput;
-import com.tinqinacademy.search.api.operations.addsearchwords.AddSearchWordOperation;
-import com.tinqinacademy.search.api.operations.addsearchwords.AddSearchWordOutput;
+import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordInput;
+import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordOperation;
+import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordOutput;
 import com.tinqinacademy.search.api.operations.findcomments.FindCommentsInput;
 import com.tinqinacademy.search.api.operations.findcomments.FindCommentsOperation;
 import com.tinqinacademy.search.api.operations.findcomments.FindCommentsOutput;

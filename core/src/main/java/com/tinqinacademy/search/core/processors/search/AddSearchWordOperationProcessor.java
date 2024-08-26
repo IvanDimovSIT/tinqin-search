@@ -1,9 +1,9 @@
 package com.tinqinacademy.search.core.processors.search;
 
 import com.tinqinacademy.search.api.errors.Errors;
-import com.tinqinacademy.search.api.operations.addsearchwords.AddSearchWordInput;
-import com.tinqinacademy.search.api.operations.addsearchwords.AddSearchWordOperation;
-import com.tinqinacademy.search.api.operations.addsearchwords.AddSearchWordOutput;
+import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordInput;
+import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordOperation;
+import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordOutput;
 import com.tinqinacademy.search.core.errors.ErrorMapper;
 import com.tinqinacademy.search.core.processors.BaseOperationProcessor;
 import com.tinqinacademy.search.persistence.model.SearchWord;
