@@ -1,5 +1,6 @@
 package com.tinqinacademy.search.kafka.config;
 
+import com.tinqinacademy.search.kafka.model.DeleteMessage;
 import com.tinqinacademy.search.kafka.model.WordMessage;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -25,7 +26,7 @@ public class KafkaConfig {
     private String kafkaServer;
 
     @Bean
-    public NewTopic topic() {
+    public NewTopic wordsTopic() {
         return TopicBuilder
                 .name("words")
                 .partitions(10)
@@ -34,7 +35,15 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, WordMessage> consumerFactory() {
+    public NewTopic deleteTopic() {
+        return TopicBuilder
+                .name("delete")
+                .partitions(10)
+                .replicas(1)
+                .build();
+    }
+
+    private Map<String, Object> createConsumerConfigs() {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaServer);
@@ -45,15 +54,36 @@ public class KafkaConfig {
         config.put(JsonDeserializer.TRUSTED_PACKAGES, "com.tinqinacademy.search.kafka");
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
+        return config;
+    }
+
+    @Bean
+    public ConsumerFactory<String, WordMessage> wordsConsumerFactory() {
+        Map<String, Object> config = createConsumerConfigs();
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
                 new ErrorHandlingDeserializer<>(new JsonDeserializer<>(WordMessage.class)));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, WordMessage> kafkaListenerContainerFactory() {
+    public ConsumerFactory<String, DeleteMessage> deleteConsumerFactory() {
+        Map<String, Object> config = createConsumerConfigs();
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
+                new ErrorHandlingDeserializer<>(new JsonDeserializer<>(DeleteMessage.class)));
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, WordMessage> kafkaWordsListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, WordMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(wordsConsumerFactory());
+        return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, DeleteMessage> kafkaDeleteListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, DeleteMessage> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(deleteConsumerFactory());
         return factory;
     }
 }

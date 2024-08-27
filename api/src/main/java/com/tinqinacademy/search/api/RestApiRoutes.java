@@ -7,4 +7,6 @@ public class RestApiRoutes {
 
     public static final String SEARCH_ADD_SEARCH_WORDS = SEARCH_BASE + "/words";
     public static final String SEARCH_FIND_COMMENTS_WORDS = SEARCH_BASE + "/comments/{word}";
+    public static final String SEARCH_FIND_WORDS = SEARCH_BASE + "/words/{commentId}";
+    public static final String SEARCH_DELETE_WORDS = SEARCH_BASE + "/words";
 }

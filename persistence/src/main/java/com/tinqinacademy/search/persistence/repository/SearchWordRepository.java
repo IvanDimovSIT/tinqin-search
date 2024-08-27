@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface SearchWordRepository extends MongoRepository<SearchWord, UUID> {
     List<SearchWord> findByWord(String word);
+    List<SearchWord> findByCommentId(UUID commentId);
+    void deleteAllByWordAndCommentId(String word, UUID commentId);
 }
