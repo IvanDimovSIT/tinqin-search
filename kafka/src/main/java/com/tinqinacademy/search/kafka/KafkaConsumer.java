@@ -4,6 +4,9 @@ import com.tinqinacademy.search.api.errors.Errors;
 import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordInput;
 import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordOperation;
 import com.tinqinacademy.search.api.operations.addsearchword.AddSearchWordOutput;
+import com.tinqinacademy.search.api.operations.deleteword.DeleteWordInput;
+import com.tinqinacademy.search.api.operations.deleteword.DeleteWordOperation;
+import com.tinqinacademy.search.api.operations.deleteword.DeleteWordOutput;
 import com.tinqinacademy.search.kafka.model.DeleteMessage;
 import com.tinqinacademy.search.kafka.model.WordMessage;
 import io.vavr.control.Either;
@@ -17,8 +20,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class KafkaConsumer {
     private final AddSearchWordOperation addSearchWordOperation;
+    private final DeleteWordOperation deleteWordOperation;
 
-    @KafkaListener(id = "consumerId", topics = "words", containerFactory = "kafkaWordsListenerContainerFactory")
+    @KafkaListener(id = "wordsConsumerId", topics = "words", containerFactory = "kafkaWordsListenerContainerFactory")
     public void listenWords(WordMessage message) {
         AddSearchWordInput input = AddSearchWordInput.builder()
                 .commentId(message.getId())
@@ -31,16 +35,16 @@ public class KafkaConsumer {
         }
     }
 
-    @KafkaListener(id = "consumerId", topics = "delete", containerFactory = "kafkaDeleteListenerContainerFactory")
+    @KafkaListener(id = "deleteConsumerId", topics = "delete", containerFactory = "kafkaDeleteListenerContainerFactory")
     public void listenDelete(DeleteMessage message) {
-        //AddSearchWordInput input = AddSearchWordInput.builder()
-        //        .commentId(message.getId())
-        //        .word(message.getWord())
-        //        .build();
+        DeleteWordInput input = DeleteWordInput.builder()
+                .commentId(message.getId())
+                .word(message.getWord())
+                .build();
 
-        //Either<Errors, AddSearchWordOutput> result = addSearchWordOperation.process(input);
-        //if (result.isLeft()) {
-        //    log.error(result.getLeft().toString());
-        //}
+        Either<Errors, DeleteWordOutput> result = deleteWordOperation.process(input);
+        if (result.isLeft()) {
+            log.error(result.getLeft().toString());
+        }
     }
 }
