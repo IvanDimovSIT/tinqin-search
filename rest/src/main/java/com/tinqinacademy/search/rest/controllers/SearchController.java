@@ -61,7 +61,7 @@ public class SearchController extends BaseController{
         return mapToResponseEntity(output, HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete words", description = "Deletes words by commentId and word string")
+    @Operation(summary = "Delete words", description = "(TEST)Deletes words by commentId and word string")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Words delete"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
